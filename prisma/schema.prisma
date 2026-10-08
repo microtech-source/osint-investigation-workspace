@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Case {
+  id          String          @id @default(cuid())
+  title       String
+  description String          @default("")
+  target      String          @default("")
+  notes       String          @default("")
+  status      String          @default("active")
+  archived    Boolean         @default(false)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  evidence    Evidence[]
+  entries     TimelineEntry[]
+
+  @@index([archived, updatedAt])
+}
+
+model Evidence {
+  id        String   @id @default(cuid())
+  caseId    String
+  kind      String
+  title     String
+  content   String   @default("")
+  url       String   @default("")
+  tags      String[] @default([])
+  createdAt DateTime @default(now())
+  case      Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId, createdAt])
+}
+
+model TimelineEntry {
+  id        String   @id @default(cuid())
+  caseId    String
+  text      String
+  createdAt DateTime @default(now())
+  case      Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+}
+
+model SavedSearch {
+  id        String   @id @default(cuid())
+  query     String
+  createdAt DateTime @default(now())
+}
+
+model FavoriteTool {
+  id        String   @id @default(cuid())
+  toolId    String   @unique
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  entity    String
+  entityId  String
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}

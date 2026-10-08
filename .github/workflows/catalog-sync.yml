@@ -1,0 +1,37 @@
+name: Sync upstream OSINT catalog
+on:
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+  push:
+    paths: ['tools.json', 'README.md']
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Fetch upstream catalog and README
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/rawfilejson/awesome-osint-arsenal/main/tools.json -o tools.json
+          curl -fsSL https://raw.githubusercontent.com/rawfilejson/awesome-osint-arsenal/main/README.md -o README.md
+      - run: node scripts/build-catalog.mjs
+      - name: Commit catalog update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools.json README.md data/catalog.json data/categories.json data/search-index.json
+          git diff --cached --quiet || (git commit -m "chore: sync upstream OSINT catalog" && git push)
+      - name: Deploy to Vercel
+        if: ${{ secrets.VERCEL_TOKEN != '' && secrets.VERCEL_ORG_ID != '' && secrets.VERCEL_PROJECT_ID != '' }}
+        run: npx vercel deploy --prod --yes --token="${{ secrets.VERCEL_TOKEN }}"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+

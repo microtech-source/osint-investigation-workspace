@@ -5,7 +5,7 @@ A single-user, authentication-protected research workspace built around the cata
 ## Features
 
 - Signed seven-day HTTP-only session cookie; middleware protects all pages and APIs. Configure one owner with `APP_USERNAME` and `APP_PASSWORD`.
-- Searchable 753-tool catalog, instant client filtering, category routes, tags and copyable official links/install commands.
+- Searchable 753-tool catalog with typo-tolerant relevance ranking, field highlighting, suggestions, category facets, advanced `tag:`/`category:`/`method:` filters, source provenance and related resources.
 - Case records with target, description, Markdown notes, status, evidence references, timeline entries, archival field and JSON report export.
 - A private browser-based image forensics workbench for local EXIF inspection, SHA-256 hashing, RGB histograms and basic error-level analysis. Selected image files are analyzed in the browser and are not uploaded.
 - Prisma/PostgreSQL schema includes cases, evidence, audit logs, timeline, saved searches and favorites.

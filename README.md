@@ -7,6 +7,7 @@ A single-user, authentication-protected research workspace built around the cata
 - Signed seven-day HTTP-only session cookie; middleware protects all pages and APIs. Configure one owner with `APP_USERNAME` and `APP_PASSWORD`.
 - Searchable 753-tool catalog, instant client filtering, category routes, tags and copyable official links/install commands.
 - Case records with target, description, Markdown notes, status, evidence references, timeline entries, archival field and JSON report export.
+- A private browser-based image forensics workbench for local EXIF inspection, SHA-256 hashing, RGB histograms and basic error-level analysis. Selected image files are analyzed in the browser and are not uploaded.
 - Prisma/PostgreSQL schema includes cases, evidence, audit logs, timeline, saved searches and favorites.
 - Scheduled GitHub Actions refresh the catalog daily and deploy when Vercel secrets are configured.
 

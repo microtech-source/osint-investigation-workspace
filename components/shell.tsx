@@ -21,7 +21,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen md:flex">
       <aside className="hidden w-60 shrink-0 border-r border-slate-800/80 bg-[#0a0e16]/90 p-4 backdrop-blur-xl md:flex md:flex-col">
         <div className="mb-9 flex items-center gap-3 px-2">
-          <Shield className="text-emerald-300" size={22} />
+          <span className="brand-pulse"><Shield className="text-emerald-300" size={20} /></span>
           <div><b className="text-sm tracking-widest">FIELDNOTES</b><p className="text-[10px] tracking-wider muted">PRIVATE INTELLIGENCE</p></div>
         </div>
         <div className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-widest text-slate-500">Workspace</div>

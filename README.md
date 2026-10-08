@@ -19,7 +19,7 @@ A single-user, authentication-protected research workspace built around the cata
 
 ## Deploy to Vercel
 
-Import this repository into Vercel, add the four environment variables from `.env.example` to the Production environment, and provision a PostgreSQL database (for example Vercel Marketplace Postgres/Neon) for `DATABASE_URL`. Run `npx prisma db push` against that database once. Vercel builds run `prisma generate && next build`.
+Import this repository into Vercel, add the four environment variables from `.env.example` to the Production environment, and provision a PostgreSQL database (for example Vercel Marketplace Postgres/Neon) for `DATABASE_URL`. Run `npx prisma db push` against that database once. Vercel builds run `prisma generate && prisma migrate deploy && next build` using the checked-in initial migration.
 
 For catalog auto-deploy, add repository Actions secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID`, and `VERCEL_PROJECT_ID`. The scheduled workflow rebuilds normalized catalog data and deploys production. Pushes to the tracked upstream files also trigger the workflow; for true upstream change mirroring, configure a repository dispatch/webhook or point the scheduled action at the upstream source before deploy.
 
@@ -54,3 +54,4 @@ flowchart LR
   Actions --> Catalog
   Actions --> Vercel[Optional Vercel deployment]
 ``
+
